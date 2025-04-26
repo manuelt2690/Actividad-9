@@ -10,7 +10,7 @@ public class ValidadorContraseñas {
         System.out.println("Ingrese el número de contraseñas a validar:");
 
         int numContraseñas = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        scanner.nextLine();
 
         Thread[] hilos = new Thread[numContraseñas];
 
@@ -22,7 +22,6 @@ public class ValidadorContraseñas {
             hilos[i].start();
         }
 
-        // Esperar a que todos los hilos terminen
         for (Thread hilo : hilos) {
             try {
                 hilo.join();
@@ -58,21 +57,18 @@ public class ValidadorContraseñas {
         }
 
         private boolean validarContraseña(String contraseña) {
-            // Expresiones regulares para cada requisito
             String regexLongitud = ".{8,}";
             String regexEspeciales = ".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*";
             String regexMayusculas = "^(.*[A-Z].*[A-Z].*)";
             String regexMinusculas = "^(.*[a-z].*[a-z].*[a-z].*)";
             String regexNumeros = ".*\\d.*";
 
-            // Validar cada requisito
             boolean cumpleLongitud = Pattern.matches(regexLongitud, contraseña);
             boolean cumpleEspeciales = Pattern.matches(regexEspeciales, contraseña);
             boolean cumpleMayusculas = Pattern.matches(regexMayusculas, contraseña);
             boolean cumpleMinusculas = Pattern.matches(regexMinusculas, contraseña);
             boolean cumpleNumeros = Pattern.matches(regexNumeros, contraseña);
 
-            // Mostrar qué requisitos no se cumplen (para ayudar al usuario)
             if (!cumpleLongitud) {
                 System.out.println("  - La contraseña #" + numero + " no cumple con la longitud mínima de 8 caracteres");
             }
